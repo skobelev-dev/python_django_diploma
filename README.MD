@@ -20,7 +20,12 @@
 
 - Стягиваем репозиторий 
 - При отсутствии устанавливаем poetry `pip install poetry`
-- 
+- Устанавливаем зависимости из корня проекта `poetry install --no-root`
+- Подключаем фронтенд-пакет из директории diploma-frontend `pip install dist/diploma-frontend-0.6.tar.gz `
+
+### Запуск
+
+- Запускаем проект в дебаг-режиме из директории mysite `python manage.py runserver`
 
 ## Способы использования проекта
 

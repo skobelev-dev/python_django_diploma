@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db import models
+from django.utils.timezone import now
 
 
 class Tag(models.Model):
@@ -38,3 +39,6 @@ class Payment(models.Model):
     code = models.CharField(
         max_length=3, validators=[RegexValidator(r"^[0-9]{3}$", )]
     )
+
+class Category(models.Model):
+    name = models.CharField(max_length=40)

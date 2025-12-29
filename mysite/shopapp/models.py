@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db import models
-from django.utils.timezone import now
 
 
 class Tag(models.Model):
@@ -46,3 +45,13 @@ class Payment(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=40)
+
+class Review(models.Model):
+    author = models.ForeignKey(User, related_name="review", on_delete=models.DO_NOTHING)
+    text = models.TextField(max_length=880)
+    rate = models.PositiveSmallIntegerField(
+        validators=[
+            MaxValueValidator(5, "5-ти бальная система"),
+        ],
+    )
+    date = models.DateTimeField(auto_now_add=True)

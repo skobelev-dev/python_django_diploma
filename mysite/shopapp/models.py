@@ -23,7 +23,7 @@ class Avatar(models.Model):
 class Payment(models.Model):
     number = models.PositiveIntegerField(
         validators=[
-            MaxValueValidator(10**15 - 1, "15 цифр"),
+            MaxValueValidator(10 ** 15 - 1, "15 цифр"),
         ],
     )
     name = models.CharField(max_length=35)
@@ -43,11 +43,13 @@ class Payment(models.Model):
         max_length=3, validators=[RegexValidator(r"^[0-9]{3}$", )]
     )
 
+
 class Category(models.Model):
     name = models.CharField(max_length=40)
 
+
 class Review(models.Model):
-    author = models.ForeignKey(User, related_name="review", on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(User, related_name="reviews", on_delete=models.DO_NOTHING)
     text = models.TextField(max_length=880)
     rate = models.PositiveSmallIntegerField(
         validators=[
@@ -55,3 +57,32 @@ class Review(models.Model):
         ],
     )
     date = models.DateTimeField(auto_now_add=True)
+
+
+def product_images_directory_path(instance: "ProductImage", filename: str) -> str:
+    pk: 'Product.pk' = instance.product.pk
+    return f"products/product_{pk}/{filename}"
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name = "images")
+
+    image = models.ImageField(upload_to=product_images_directory_path)
+
+    alt = models.CharField(max_length=50)
+
+class Product(models.Model):
+    category = models.ForeignKey(Category, related_name="product", on_delete=models.DO_NOTHING)
+    price = models.DecimalField(max_digits=10*6, decimal_places=2)
+    count = models.IntegerField(
+            validators=[
+                MinValueValidator(0),
+                MaxValueValidator(10 ** 15 - 1),
+            ],
+    )
+    date = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=40)
+    description = models.TextField(max_length=800)
+    freeDelivery = models.BooleanField()
+    tags = models.ManyToManyField(Tag, related_name="products")
+    reviews = models.ManyToManyField(Review, related_name="products")

@@ -21,7 +21,18 @@
 - Стягиваем репозиторий 
 - При отсутствии устанавливаем poetry `pip install poetry`
 - Устанавливаем зависимости из корня проекта `poetry install --no-root`
-- Подключаем фронтенд-пакет из директории diploma-frontend `pip install dist/diploma-frontend-0.6.tar.gz `
+- Подключаем фронтенд-пакет из директории diploma-frontend/:
+  - Находим директорию diploma-frontend
+  - ![img.png](README_IMGS/img.png)
+  - Переходим в нее:
+    - если вы находитесь в корневой папке проекта(на уровне где присутсвуют директории: mysite, diploma-frontend, README.MD, ...), то команда будет: `cd ./diploma-frontend/`
+  - Находясь в директории diploma-frontend/ - выполняем следующие команды:
+    - `python.exe -m pip install --upgrade pip`
+    - `pip install dist/diploma-frontend-0.6.tar.gz `
+  - В случае если на этом этапе вылетают исключение, рекомендую:
+    - проверить из какой папки выполняются команды
+    - убедиться в существовании файла diploma-frontend-0.6.tar.gz, находящегося по пути diploma-frontend/dist/
+    - Ознакомиться с отдельным официальным README файлом по установке фронтенда для этого проекта, находящегося по адресу: https://gitlab.skillbox.ru/vrvrvvr_vrvrvrv/python_django_diploma/-/tree/master/diploma-frontend
 
 ### Запуск
 

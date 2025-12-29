@@ -22,7 +22,11 @@ class Avatar(models.Model):
 
 
 class Payment(models.Model):
-    number = models.PositiveIntegerField(max_length=15)
+    number = models.PositiveIntegerField(
+        validators=[
+            MaxValueValidator(10**15 - 1, "15 цифр"),
+        ],
+    )
     name = models.CharField(max_length=35)
     month = models.PositiveSmallIntegerField(
         validators=[

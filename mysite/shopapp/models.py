@@ -107,8 +107,8 @@ class Product(models.Model):
     title = models.CharField(max_length=40)
     description = models.TextField(max_length=800)
     freeDelivery = models.BooleanField()
-    tags = models.ManyToManyField(Tag, related_name="products")
-    reviews = models.ManyToManyField(Review, related_name="products")
+    tags = models.ManyToManyField(Tag, related_name="products", null=True)
+    reviews = models.ManyToManyField(Review, related_name="products", null=True)
 
     def __str__(self):
         return f"Product(pk={self.pk}, title={self.title!r})"

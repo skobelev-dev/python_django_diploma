@@ -114,6 +114,9 @@ class Product(models.Model):
     def __str__(self):
         return f"Product(pk={self.pk}, title={self.title!r})"
 
+class Specifications(models.Model):
+    name = models.CharField(max_length=60)
+    value = models.CharField(max_length=70)
 
 class Satus(models.TextChoices):
     ACCEPTED = 'accepted'

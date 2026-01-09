@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 
+from shopapp.views import ProductViewSet
 from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+routers = DefaultRouter()
+
+routers.register("products", ProductViewSet)
 
 urlpatterns = [
+    path("api/", include(routers.urls)),
     path("", include("frontend.urls")),
     path("admin/", admin.site.urls),
     path("shop/", include("shopapp.urls"))

@@ -109,6 +109,7 @@ class Product(models.Model):
     freeDelivery = models.BooleanField()
     tags = models.ManyToManyField(Tag, related_name="products", null=True, blank=True)
     reviews = models.ManyToManyField(Review, related_name="products", null=True, blank=True)
+    rating = models.FloatField(default=0)
 
     def __str__(self):
         return f"Product(pk={self.pk}, title={self.title!r})"

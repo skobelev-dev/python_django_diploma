@@ -115,6 +115,7 @@ class Product(models.Model):
         return f"Product(pk={self.pk}, title={self.title!r})"
 
 class Specifications(models.Model):
+    products = models.ManyToManyField(Product, related_name="specifications")
     name = models.CharField(max_length=60)
     value = models.CharField(max_length=70)
 

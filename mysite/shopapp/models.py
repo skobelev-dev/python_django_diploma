@@ -29,7 +29,7 @@ class Avatar(models.Model):
 class Payment(models.Model):
     number = models.PositiveIntegerField(
         validators=[
-            MaxValueValidator(10 ** 15 - 1, "15 цифр"),
+            MaxValueValidator(10**15 - 1, "15 цифр"),
         ],
     )
     name = models.CharField(max_length=35)
@@ -46,7 +46,12 @@ class Payment(models.Model):
         ],
     )
     code = models.CharField(
-        max_length=3, validators=[RegexValidator(r"^[0-9]{3}$", )]
+        max_length=3,
+        validators=[
+            RegexValidator(
+                r"^[0-9]{3}$",
+            )
+        ],
     )
 
     def __str__(self):
@@ -61,11 +66,13 @@ class Category(models.Model):
 
 
 def custom_serialize(value):
-    return value.strftime('%Y-%m-%d %H:%M') if value else None
+    return value.strftime("%Y-%m-%d %H:%M") if value else None
 
 
 class Review(models.Model):
-    author = models.ForeignKey(User, related_name="reviews", on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(
+        User, related_name="reviews", on_delete=models.DO_NOTHING
+    )
     text = models.TextField(max_length=880)
     rate = models.PositiveSmallIntegerField(
         validators=[
@@ -79,12 +86,14 @@ class Review(models.Model):
 
 
 def product_images_directory_path(instance: "ProductImage", filename: str) -> str:
-    pk: 'Product.pk' = instance.product.pk
+    pk: "Product.pk" = instance.product.pk
     return f"products/product_{pk}/{filename}"
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name="images")
+    product = models.ForeignKey(
+        "Product", on_delete=models.CASCADE, related_name="images"
+    )
 
     image = models.ImageField(upload_to=product_images_directory_path)
 
@@ -95,12 +104,14 @@ class ProductImage(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name="product", on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(
+        Category, related_name="product", on_delete=models.DO_NOTHING
+    )
     price = models.DecimalField(max_digits=10 * 6, decimal_places=2)
     count = models.IntegerField(
         validators=[
             MinValueValidator(0),
-            MaxValueValidator(10 ** 15 - 1),
+            MaxValueValidator(10**15 - 1),
         ],
     )
     date = models.DateTimeField(auto_now_add=True)
@@ -108,40 +119,50 @@ class Product(models.Model):
     description = models.TextField(max_length=800)
     freeDelivery = models.BooleanField()
     tags = models.ManyToManyField(Tag, related_name="products", null=True, blank=True)
-    reviews = models.ManyToManyField(Review, related_name="products", null=True, blank=True)
+    reviews = models.ManyToManyField(
+        Review, related_name="products", null=True, blank=True
+    )
     rating = models.FloatField(default=0)
 
     def __str__(self):
         return f"Product(pk={self.pk}, title={self.title!r})"
+
 
 class Specifications(models.Model):
     products = models.ManyToManyField(Product, related_name="specifications")
     name = models.CharField(max_length=60)
     value = models.CharField(max_length=70)
 
+
 class Satus(models.TextChoices):
-    ACCEPTED = 'accepted'
-    NOT_ACCEPTED = 'not accepted'
+    ACCEPTED = "accepted"
+    NOT_ACCEPTED = "not accepted"
 
 
 class DeliveryType(models.TextChoices):
-    FREE = 'free', 'Бесплатная доставка'
-    PAID = 'paid', 'Платная доставка'
+    FREE = "free", "Бесплатная доставка"
+    PAID = "paid", "Платная доставка"
 
 
 class PaymentType(models.TextChoices):
-    ONLINE = 'online', 'Онлайн'
-    CASH = 'cash', 'Наличными'
+    ONLINE = "online", "Онлайн"
+    CASH = "cash", "Наличными"
 
 
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     # Как я полагаю: имя, почта и телефон - пользователя совершившего заказ
     user = models.ForeignKey(User, related_name="orders", on_delete=models.DO_NOTHING)
-    deliveryType = models.CharField(max_length=20, choices=DeliveryType.choices, default=DeliveryType.FREE)
-    paymentType = models.CharField(max_length=20, choices=PaymentType.choices, default=PaymentType.ONLINE)
-    totalCost = models.DecimalField(max_digits=10 ** 9, decimal_places=2)
-    status = models.CharField(max_length=20, choices=Satus.choices, default=Satus.ACCEPTED)
+    deliveryType = models.CharField(
+        max_length=20, choices=DeliveryType.choices, default=DeliveryType.FREE
+    )
+    paymentType = models.CharField(
+        max_length=20, choices=PaymentType.choices, default=PaymentType.ONLINE
+    )
+    totalCost = models.DecimalField(max_digits=10**9, decimal_places=2)
+    status = models.CharField(
+        max_length=20, choices=Satus.choices, default=Satus.ACCEPTED
+    )
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=70)
     products = models.ManyToManyField(Product, related_name="orders")

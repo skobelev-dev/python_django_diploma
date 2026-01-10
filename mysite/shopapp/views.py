@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
+# from django.shortcuts import render
+# from django.http import HttpRequest, HttpResponse
 from rest_framework.viewsets import ModelViewSet
 from .serializers import ProductSerializer
 

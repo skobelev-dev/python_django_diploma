@@ -3,9 +3,16 @@ import time
 
 from rest_framework import serializers
 import pytz
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Review
 
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        # fields =
 
 class ProductSerializer(serializers.ModelSerializer):
 
@@ -87,3 +94,19 @@ class ProductSerializer(serializers.ModelSerializer):
             {"name": specification.name, "value": specification.value}
             for specification in obj.specifications.all()
         ]
+
+    @action(detail=True, methods=["get", "post"], url_path="review")
+    def review(self, request, pk=None):
+        product = self.get_object()
+
+        if request.method == "GET":
+            qs = product.reviews.all()
+            serializer = ReviewSerializer(qs, many=True)
+            return Response(serializer.data)
+
+        # POST — создать отзыв для продукта
+        serializer = ReviewSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        review = serializer.save()
+        product.reviews.add(review)
+        return Response(ReviewSerializer(review).data, status=201)

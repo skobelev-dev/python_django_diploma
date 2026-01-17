@@ -154,10 +154,10 @@ class Order(models.Model):
     # Как я полагаю: имя, почта и телефон - пользователя совершившего заказ
     user = models.ForeignKey(User, related_name="orders", on_delete=models.DO_NOTHING)
     deliveryType = models.CharField(
-        max_length=20, choices=DeliveryType.choices.fget, default=DeliveryType.FREE
+        max_length=20, choices=DeliveryType.choices, default=DeliveryType.FREE
     )
     paymentType = models.CharField(
-        max_length=20, choices=PaymentType.choices.fget, default=PaymentType.ONLINE
+        max_length=20, choices=PaymentType.choices, default=PaymentType.ONLINE
     )
     totalCost = models.DecimalField(max_digits=10**9, decimal_places=2)
     status = models.CharField(

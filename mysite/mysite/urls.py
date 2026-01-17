@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf.urls.static import static
 
 from shopapp.views import ProductViewSet
@@ -30,7 +31,7 @@ urlpatterns = [
     path("api/", include(routers.urls)),
     path("", include("frontend.urls")),
     path("admin/", admin.site.urls),
-    path("shop/", include("shopapp.urls"))
+    path("shop/", include("shopapp.urls")),
 ]
 
 if DEBUG:

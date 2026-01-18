@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "shopapp.apps.ShopappConfig",
+    "catalogapp.apps.ShopappConfig",
     "frontend",
     "rest_framework",
 ]

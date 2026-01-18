@@ -4,8 +4,20 @@ import time
 from rest_framework import serializers
 import pytz
 
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Tag
 
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model = Tag
+        fields = "id", "name"
+
+    id = serializers.SerializerMethodField()
+
+    # noinspection PyMethodMayBeStatic
+    def get_id(self, obj: Tag):
+        return obj.pk
 
 class ProductSerializer(serializers.ModelSerializer):
 

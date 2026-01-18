@@ -1,10 +1,22 @@
 from django.contrib import admin
 
-from .models import Specifications, Tag, Avatar, Payment, Category, Review, ProductImage, Product, Order
+from .models import (
+    Specifications,
+    Tag,
+    Avatar,
+    Payment,
+    Category,
+    Review,
+    ProductImage,
+    Product,
+    Order,
+)
+
 
 @admin.register(Specifications)
 class SpecificationAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

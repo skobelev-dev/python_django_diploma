@@ -2,7 +2,9 @@
 # from django.http import HttpRequest, HttpResponse
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from .serializers import ProductSerializer, ReviewSerializer
+
+from reviews.serializers import ReviewSerializer
+from .serializers import ProductSerializer
 from rest_framework.response import Response
 from .models import Product
 

@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.conf.urls.static import static
 
+from my_auth.views import ProfileViewSet
 from catalogapp.views import ProductViewSet
 from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.contrib import admin
@@ -28,6 +29,7 @@ routers = DefaultRouter()
 
 routers.register("products", ProductViewSet)
 routers.register("tags", TagViewSet)
+routers.register("profile", ProfileViewSet)
 
 urlpatterns = [
     path("api/", include(routers.urls)),

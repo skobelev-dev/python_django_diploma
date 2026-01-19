@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "media.apps.MediaConfig",
-    "auth.apps.AuthConfig",
+    "my_auth.apps.AuthConfig",
     "orders.apps.OrdersConfig",
     "payment.apps.PaymentConfig",
     "reviews.apps.ReviewsConfig",

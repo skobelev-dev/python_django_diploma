@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class ShopappConfig(AppConfig):
+class CatalogappConfig(AppConfig):
     name = "catalogapp"

@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from media.models import Avatar, ProductImage
+
+
+@admin.register(Avatar)
+class AvatarAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    pass

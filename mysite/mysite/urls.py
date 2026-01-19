@@ -17,15 +17,19 @@ Including another URLconf
 
 from django.conf.urls.static import static
 
+from my_auth.views import ProfileViewSet
 from catalogapp.views import ProductViewSet
 from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from catalogapp.views import TagViewSet
 
 routers = DefaultRouter()
 
 routers.register("products", ProductViewSet)
+routers.register("tags", TagViewSet)
+routers.register("profile", ProfileViewSet)
 
 urlpatterns = [
     path("api/", include(routers.urls)),

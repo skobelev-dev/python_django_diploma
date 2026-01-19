@@ -16,6 +16,7 @@ class ProfileViewSet(ViewSet):
 
     def list(self, request):
         profiles = self.queryset
-        print(self.queryset.count())
-        serializer = ProfileSerializer(profiles, many=True)
+        count = profiles.count()
+        many = True if count > 1 else False
+        serializer = ProfileSerializer(profiles, many=many)
         return Response(serializer.data)

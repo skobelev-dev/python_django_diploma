@@ -1,15 +1,14 @@
 from django.contrib import admin
 
+from media.models import Avatar, ProductImage
+from orders.models import Order
+from payment.models import Payment
 from .models import (
     Specifications,
     Tag,
-    Avatar,
-    Payment,
     Category,
     Review,
-    ProductImage,
     Product,
-    Order,
 )
 
 

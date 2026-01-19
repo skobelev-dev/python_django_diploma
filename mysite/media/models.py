@@ -1,15 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from catalogapp.models import Product
+
 
 def product_images_directory_path(instance: "ProductImage", filename: str) -> str:
-    pk: "Product.pk" = instance.product.pk
+    pk = instance.product.pk
     return f"products/product_{pk}/{filename}"
 
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
-        "Product", on_delete=models.CASCADE, related_name="images"
+        Product, on_delete=models.CASCADE, related_name="images"
     )
 
     image = models.ImageField(upload_to=product_images_directory_path)

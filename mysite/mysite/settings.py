@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "orders.apps.OrdersConfig",
     "payment.apps.PaymentConfig",
     "reviews.apps.ReviewsConfig",
+    "catalogapp.apps.CatalogappConfig",
     "frontend",
     "rest_framework",
 ]

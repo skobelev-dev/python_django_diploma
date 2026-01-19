@@ -22,10 +22,12 @@ from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from catalogapp.views import TagViewSet
 
 routers = DefaultRouter()
 
 routers.register("products", ProductViewSet)
+routers.register("tags", TagViewSet)
 
 urlpatterns = [
     path("api/", include(routers.urls)),

@@ -111,14 +111,15 @@ class ProductSerializer(serializers.ModelSerializer):
         product.reviews.add(review)
         return Response(ReviewSerializer(review).data, status=201)
 
-    class TagSerializer(serializers.ModelSerializer):
-        class Meta:
 
-            model = Tag
-            fields = "id", "name"
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
 
-        id = serializers.SerializerMethodField()
+        model = Tag
+        fields = "id", "name"
 
-        # noinspection PyMethodMayBeStatic
-        def get_id(self, obj: Tag):
-            return obj.pk
+    id = serializers.SerializerMethodField()
+
+    # noinspection PyMethodMayBeStatic
+    def get_id(self, obj: Tag):
+        return obj.pk

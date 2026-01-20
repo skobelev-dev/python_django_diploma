@@ -1,12 +1,10 @@
-# from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet, GenericViewSet
-from django.db.models import F
+from rest_framework.viewsets import ViewSet
 
 from media.models import Avatar
 from my_auth.models import Profile
-from my_auth.serializers import MyProfileSerializer, ProfileSerializer
+from my_auth.serializers import ProfileSerializer
 
 
 class ProfileViewSet(ViewSet):
@@ -18,21 +16,18 @@ class ProfileViewSet(ViewSet):
 
         response = []
         for profile in self.queryset:
-            fullName = profile.user.username
+            full_name = profile.user.username
             email = profile.user.email
             phone = str(profile.phone)
-            image =  profile.user.avatar.image
+            image = profile.user.avatar.image
             src = "" if not image else image.url or ""
-            avatar = {
-                "src": src,
-                "alt": profile.user.avatar.alt
-            }
-            serialized = MyProfileSerializer(
+            avatar = {"src": src, "alt": profile.user.avatar.alt}
+            serialized = ProfileSerializer(
                 data={
-                    "fullName": fullName,
+                    "fullName": full_name,
                     "email": email,
                     "phone": phone,
-                    "avatar": avatar
+                    "avatar": avatar,
                 }
             )
             serialized.is_valid(raise_exception=True)

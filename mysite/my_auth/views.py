@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet, GenericViewSet
 from django.db.models import F
+
+from media.models import Avatar
 from my_auth.models import Profile
 from my_auth.serializers import MyProfileSerializer, ProfileSerializer
 
@@ -46,4 +48,6 @@ class ProfileViewSet(ViewSet):
         user.save()
         profile = Profile(phone=data.get("phone"), user=user)
         profile.save()
+        avatar = Avatar(alt=data["avatar"].get("alt"), user=user)
+        avatar.save()
         return Response(serializer.data)

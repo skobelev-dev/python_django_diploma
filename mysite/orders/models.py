@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from catalogapp.models import Product
+
 
 class Satus(models.TextChoices):
     ACCEPTED = "accepted"

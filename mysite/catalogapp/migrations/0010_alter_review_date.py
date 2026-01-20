@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             model_name="review",
             name="date",
             field=models.DateTimeField(
-                auto_now_add=True, serialize=catalogapp.models.custom_serialize
+                auto_now_add=True,
             ),
         ),
     ]

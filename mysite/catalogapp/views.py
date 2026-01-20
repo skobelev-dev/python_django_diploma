@@ -1,12 +1,13 @@
 # from django.shortcuts import render
 # from django.http import HttpRequest, HttpResponse
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from reviews.serializers import ReviewSerializer
 from .serializers import ProductSerializer
 from rest_framework.response import Response
-from .models import Product
+from .models import Product, Tag
+from .serializers import TagSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -28,3 +29,16 @@ class ProductViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         review = serializer.save(author=user)
         return Response(ReviewSerializer(review).data, status=201)
+
+
+class TagViewSet(ViewSet):
+    """
+    Получение списка тегов.
+    """
+
+    queryset = Tag.objects.all()
+
+    def list(self, request):
+        tags = self.queryset
+        serializer = TagSerializer(tags, many=True)
+        return Response(serializer.data)

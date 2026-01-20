@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "catalogapp.apps.ShopappConfig",
+    "media.apps.MediaConfig",
+    "my_auth.apps.AuthConfig",
+    "orders.apps.OrdersConfig",
+    "payment.apps.PaymentConfig",
+    "reviews.apps.ReviewsConfig",
+    "catalogapp.apps.CatalogappConfig",
     "frontend",
     "rest_framework",
 ]

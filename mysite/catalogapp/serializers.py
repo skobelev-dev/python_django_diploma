@@ -4,7 +4,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from media.models import ProductImage
-from .models import Product
+from reviews.serializers import ReviewSerializer
+from .models import Product, Tag
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -51,13 +52,16 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return f"{time_str} ({obj.date.tzname()})"
 
+    # noinspection PyMethodMayBeStatic
     def get_fullDescription(self, obj: Product):
 
         return obj.description
 
+    # noinspection PyMethodMayBeStatic
     def get_description(self, obj: Product):
         return obj.description[:20]
 
+    # noinspection PyMethodMayBeStatic
     def get_images(self, obj: Product):
         p: ProductImage
         # print(p.image.url)
@@ -67,9 +71,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return images
 
+    # noinspection PyMethodMayBeStatic
     def get_tags(self, obj: Product):
         return [tag.name for tag in obj.tags.all()]
 
+    # noinspection PyMethodMayBeStatic
     def get_reviews(self, obj: Product):
         return [
             {
@@ -82,6 +88,7 @@ class ProductSerializer(serializers.ModelSerializer):
             for review in obj.reviews.all()
         ]
 
+    # noinspection PyMethodMayBeStatic
     def get_specifications(self, obj: Product):
         return [
             {"name": specification.name, "value": specification.value}
@@ -103,3 +110,16 @@ class ProductSerializer(serializers.ModelSerializer):
         review = serializer.save()
         product.reviews.add(review)
         return Response(ReviewSerializer(review).data, status=201)
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model = Tag
+        fields = "id", "name"
+
+    id = serializers.SerializerMethodField()
+
+    # noinspection PyMethodMayBeStatic
+    def get_id(self, obj: Tag):
+        return obj.pk

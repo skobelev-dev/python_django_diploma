@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 
 from my_auth.views import ProfileViewSet
 from catalogapp.views import ProductViewSet
+from payment.views import PaymentGenericViewSet
 from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.contrib import admin
 from django.urls import path, include
@@ -30,6 +31,7 @@ routers = DefaultRouter()
 routers.register("products", ProductViewSet)
 routers.register("tags", TagViewSet)
 routers.register("profile", ProfileViewSet)
+routers.register("payment", PaymentGenericViewSet)
 
 urlpatterns = [
     path("api/", include(routers.urls)),

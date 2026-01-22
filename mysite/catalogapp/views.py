@@ -10,6 +10,10 @@ from .models import Product, Tag
 from .serializers import TagSerializer
 
 
+def get_products_ids():
+    return [obj.pk for obj in Product.objects.values_list("pk", flat=True)]
+
+
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -29,6 +33,10 @@ class ProductViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         review = serializer.save(author=user)
         return Response(ReviewSerializer(review).data, status=201)
+
+    @action(methods=["get"], url_name="get-products-ids", detail=False)
+    def ids(self):
+        return Response(data={"products ids": get_products_ids()}, status=200)
 
 
 class TagViewSet(ViewSet):

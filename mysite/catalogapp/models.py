@@ -48,3 +48,8 @@ class Specifications(models.Model):
     products = models.ManyToManyField(Product, related_name="specifications")
     name = models.CharField(max_length=60)
     value = models.CharField(max_length=70)
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)

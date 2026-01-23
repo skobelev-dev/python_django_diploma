@@ -5,6 +5,7 @@ from .models import (
     Tag,
     Category,
     Product,
+    Basket,
 )
 
 
@@ -25,4 +26,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Basket)
+class BasketAdmin(admin.ModelAdmin):
     pass

@@ -1,3 +1,4 @@
+from django_stubs_ext.db.models.manager import ManyRelatedManager
 from rest_framework import serializers
 import pytz
 from rest_framework.decorators import action
@@ -5,7 +6,7 @@ from rest_framework.response import Response
 
 from media.models import ProductImage
 from reviews.serializers import ReviewSerializer
-from .models import Product, Tag
+from .models import Product, Tag, Basket
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -66,7 +67,8 @@ class ProductSerializer(serializers.ModelSerializer):
         p: ProductImage
         # print(p.image.url)
         images = [
-            {"src": image.image.url, "alt": image.alt} for image in obj.images.all()
+            {"src": image.image.url, "alt": image.alt}
+            for image in obj.images.all()
         ]
 
         return images
@@ -121,5 +123,39 @@ class TagSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
 
     # noinspection PyMethodMayBeStatic
-    def get_id(self, obj: Tag):
+    def get_id(self, obj: Tag ):
         return obj.pk
+
+
+class BasketModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Basket
+        fields = (
+            "id",
+            "category",
+            "price",
+            "count",
+            "date",
+            "title",
+            "description",
+            "freeDelivery",
+            "tags",
+            "reviews",
+            "rating",
+        )
+
+    id = serializers.IntegerField(min_value=1, source="product.pk")
+    category = serializers.IntegerField(min_value=1, source="product.category.id")
+    price = serializers.DecimalField(
+        source="product.price", max_digits=10**9, decimal_places=2
+    )
+    count = serializers.IntegerField(min_value=1, source="product.count")
+    date = serializers.DateTimeField(source="product.date")
+    title = serializers.CharField(source="product.title")
+    description = serializers.CharField(source="product.title")
+    freeDelivery = serializers.BooleanField(source="product.freeDelivery")
+    tags = TagSerializer(source="product.tags", many=True)
+    reviews = ReviewSerializer(source="product.reviews", many=True)
+    rating = serializers.FloatField(source="product.rating")

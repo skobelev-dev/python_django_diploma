@@ -1,4 +1,6 @@
-# Итоговый проект по Django(в основном DRF + готовый Frontend)
+# Итоговый проект по Django(DRF + given Frontend)
+
+# (In the process of development...)
 
 ## Описание
 
